@@ -106,7 +106,7 @@ then
 end
 
 
-rule "No pwn -> diet"
+rule "No pwn noobs -> diet"
 when
     Answer( question == QuestionCode.PWN_NOOBS, !yes )
     QuestionMapHolder( qm : map )
@@ -163,7 +163,7 @@ then
     insert( new Answer( QuestionCode.ANIMATED, y ) );
 end
 
-rule "No boost"
+rule "Yes Animated"
 when
     Answer( question == QuestionCode.ANIMATED, yes )
 then
