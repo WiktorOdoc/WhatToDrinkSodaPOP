@@ -1,0 +1,190 @@
+package com.sample.rules;
+
+import com.sample.CSVLoader;
+import java.util.Map;
+
+
+global com.sample.Main gui; //interface with GUI
+
+declare enum QuestionCode 
+    MEXICO,
+    PWN_NOOBS,
+    DIET,
+    OSTENTATIOUS,
+    BOOST,
+    ANIMATED;
+end
+
+declare enum Drink
+    JARRITOS,
+    MOUNTAIN_DEW,
+    JOLT,
+    MELLO_YELLO,
+    BAWLS,
+    DIET_RITE,
+    ZEVIA,
+    BLUE_SKY,
+    DIET_HANSENS,
+    COKE_LIME,
+    COKE_CHERRY,
+    DR_PEPPER_DIET,
+    DIET_PEPSI,
+    COCA_COLA_ZERO,
+    DIET_BANGS,
+    FRESCA,
+    AnW,
+    SEVENUP_DIET,
+    SPRITE_ZERO;
+end
+
+declare QuestionMapHolder //maps all questions from QuestionCode and questions.csv
+    map : java.util.Map<String, String>
+end
+
+declare DrinkMapHolder //maps all drink names and file names from Drink enum and drinks.csv
+    map : java.util.Map<String, String[]>
+end
+
+
+declare Answer  
+    question : QuestionCode
+    yes      : boolean
+end
+
+declare FinalDrink //list of drinks to recommend
+    drinks : java.util.List<String>  
+end
+
+
+//load text from csv
+rule "init"
+when
+    not QuestionMapHolder()
+    not DrinkMapHolder()
+then
+    insert( new QuestionMapHolder( CSVLoader.loadQuestions("/questions.csv") ) );
+    insert( new DrinkMapHolder( CSVLoader.loadDrinks("/drinks.csv") ) );
+end
+
+
+
+rule "First question/Mexico"
+when
+    not Answer()
+    QuestionMapHolder( qm : map )
+then
+	//sends question data to gui to be displayed, y is boolean answer
+	// (as all question are yes/no, so no need for additional fields like possible choices or answers)
+    boolean y = gui.ask( (String) qm.get( QuestionCode.MEXICO.name() ) ); 
+    insert( new Answer( QuestionCode.MEXICO, y ) );
+end
+
+
+rule "Yes Mexico"
+when
+    Answer( question == QuestionCode.MEXICO, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.JARRITOS.name()) ) );
+end
+
+
+rule "No mexico -> PwN nOobs"
+when
+    Answer( question == QuestionCode.MEXICO, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.PWN_NOOBS.name() ) );
+    insert( new Answer( QuestionCode.PWN_NOOBS, y ) );
+end
+
+
+rule "Yes PwN n00bs "
+when
+    Answer( question == QuestionCode.PWN_NOOBS, yes )
+then
+    insert( new FinalDrink(java.util.Arrays.asList(Drink.MOUNTAIN_DEW.name(), Drink.JOLT.name(), Drink.MELLO_YELLO.name(), Drink.BAWLS.name())));
+end
+
+
+rule "No pwn -> diet"
+when
+    Answer( question == QuestionCode.PWN_NOOBS, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.DIET.name() ) );
+    insert( new Answer( QuestionCode.DIET, y ) );
+end
+
+rule "Yes diet -> ostentatious"
+when
+    Answer( question == QuestionCode.DIET, yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.OSTENTATIOUS.name() ) );
+    insert( new Answer( QuestionCode.OSTENTATIOUS, y ) );
+end
+
+rule "Yes ostentatious"
+when
+    Answer( question == QuestionCode.OSTENTATIOUS, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_RITE.name(), Drink.ZEVIA.name(), Drink.BLUE_SKY.name(), Drink.DIET_HANSENS.name()) ) );
+end
+
+rule "No ostentatious -> boost"
+when
+    Answer( question == QuestionCode.OSTENTATIOUS, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.BOOST.name() ) );
+    insert( new Answer( QuestionCode.BOOST, y ) );
+end
+
+rule "Yes boost"
+when
+    Answer( question == QuestionCode.BOOST, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.COKE_LIME.name(), Drink.COKE_CHERRY.name(), Drink.DR_PEPPER_DIET.name(), Drink.COCA_COLA_ZERO.name(), Drink.DIET_PEPSI.name()) ) );
+end
+
+rule "No boost"
+when
+    Answer( question == QuestionCode.BOOST, !yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_BANGS.name(), Drink.FRESCA.name(), Drink.AnW.name(), Drink.SEVENUP_DIET.name(), Drink.SPRITE_ZERO.name()) ) );
+end
+
+rule "No diet -> anime"
+when
+    Answer( question == QuestionCode.DIET, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.ANIMATED.name() ) );
+    insert( new Answer( QuestionCode.ANIMATED, y ) );
+end
+
+rule "No boost"
+when
+    Answer( question == QuestionCode.ANIMATED, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_BANGS.name(), Drink.FRESCA.name(), Drink.AnW.name()) ) );
+end
+
+
+
+
+//FINAL RESULTS
+rule "Display final drinks"
+when
+    FinalDrink( $list : drinks )
+    DrinkMapHolder( $dm : map )
+then
+    String[][] result = new String[$list.size()][];
+
+    int i = 0;
+    for (Object drink : $list) {
+        result[i++] = (String[]) $dm.get((String)drink);
+    }
+
+    gui.showDrinks(result, "Recommended Drinks:", "/images/");
+end
