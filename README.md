@@ -3,7 +3,7 @@ What should I drink? Soda POP edition.
 
 By 160069 and 160179
 
-In src/main/resources directory:
+In `src/main/resources` directory:
 
 questions.csv contains question data in format:
 
