@@ -560,7 +560,7 @@ end
 
 rule "Yes Tummy Ache"
 when
-    Answer( question == QuestionCode.QUALITY, yes )
+    Answer( question == QuestionCode.TUMMY_ACHE, yes )
 then
     insert( new FinalDrink( java.util.Arrays.asList(
         Drink.CANADA_DRY_GINGER_ALE.name(),
@@ -718,6 +718,8 @@ then
         Drink.DR_PEPPER_CAN.name()
     )));
 end
+
+
 
 rule "Display final drinks"
 when
