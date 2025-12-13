@@ -5,11 +5,11 @@ By 160069 and 160179
 
 In `src/main/resources` directory:
 
-questions.csv contains question data in format:
+`questions.csv` contains question data in format:
 
 `QUESTION_ENUM,Actual question text`
 
-drinks.csv contains drink data in format:
+`drinks.csv` contains drink data in format:
 
 `DRINK_ENUM,Drink name,drink_file.png`
 
