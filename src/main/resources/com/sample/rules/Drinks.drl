@@ -11,30 +11,126 @@ declare enum QuestionCode
     PWN_NOOBS,
     DIET,
     OSTENTATIOUS,
+    ANIMATED,
     BOOST,
-    ANIMATED;
+    JUGGALO,
+    DIRT_AFTERTASTE,
+    TAY_ZONDAY,
+    BRAZIL,
+    ON_THE_DOLE,
+    FLUX_CAPACITOR,
+    BUBBLE_GUM,
+    ALL_NIGHTER,
+    TESCO,
+    PICNIC,
+    BUY_ANY,
+    TYLER_PERRY,
+    ROOT_BEER,
+    TUMMY_ACHE,
+    QUALITY,
+    HFCS,
+    AND_TASTE,
+    CHERRY,
+    CAFFEINE,
+    BACKPACK,
+    SING,
+    SIMPLER_DAYS;
 end
 
 declare enum Drink
     JARRITOS,
-    MOUNTAIN_DEW,
-    JOLT,
-    MELLO_YELLO,
-    BAWLS,
-    DIET_RITE,
-    ZEVIA,
-    BLUE_SKY,
-    DIET_HANSENS,
-    COKE_LIME,
-    COKE_CHERRY,
-    DR_PEPPER_DIET,
-    DIET_PEPSI,
-    COCA_COLA_ZERO,
-    DIET_BANGS,
-    FRESCA,
-    AnW,
-    SEVENUP_DIET,
-    SPRITE_ZERO;
+	MOUNTAIN_DEW_CODE_RED,
+	JOLT,
+	MELLO_YELLO,
+	BAWLS,
+	DIET_RITE,
+	ZEVIA,
+	BLUE_SKY,
+	DIET_HANSENS,
+	COKE_LIME,
+	COKE_CHERRY,
+	DR_PEPPER_DIET,
+	DIET_PEPSI,
+	COCA_COLA_ZERO,
+	DIET_BANGS,
+	FRESCA,
+	AnW_DIET,
+	SEVENUP_DIET,
+	SPRITE_ZERO,
+	CACTUS_COOLER,
+	BUZZ,
+	SLURM,
+	FAYGO,
+	PEPSI_JAZZ,
+	DR_PEPPER_CHERRY_CHOCOLATE,
+	GUARANA_ANTARCTICA,
+	SAFEWAY,
+	HUBBA_BUBBA,
+	COCA_COLA_BLAK,
+	TAB,
+	CRYSTAL_PEPSI,
+	INCA_KOLA,
+	VAULT,
+	PEPSI_MAX,
+	RED_BULL_SIMPLY_COLA,
+	JOSTA,
+	QUIBLA_COLA,
+	SQUIRT,
+	DADS_ROOT_BEER,
+	SUNKIST,
+	COUNTRY_TIME,
+	PENNSYLVANIA_DUTCH_BIRCH_BEER,
+	MOXIE,
+	ALE_EIGHT_ONE,
+	DR_PEPPER,
+	CHEERWINE,
+	WELCHS,
+	FANTA_GRAPE,
+	BIG_RED,
+	CRUSH,
+	HAWAIIAN_PUNCH,
+	FANTA,
+	VIRGILS_ROOT_BEER_PARTY_KEG,
+	HENRY_WEINHARDS_ROOT_BEER,
+	DR_BROWNS_ROOT_BEER,
+	THOMAS_KEMPER_ROOT_BEER,
+	IBC_ROOT_BEER,
+	SPRECHER_ROOT_BEER,
+	AnW_ROOT_BEER,
+	BARQS_ROOT_BEER,
+	MUG_ROOT_BEER,
+	CANADA_DRY_GINGER_ALE,
+	SEAGRAMS_GINGER_ALE,
+	SCHWEPPES_GINGER_ALE,
+	VERNORS_GINGER_ALE,
+	BLENHEIM_GINGER_ALE,
+	COCA_COLA_GLASS,
+	JONES_SODA,
+	BOYLAN_BOTTLING,
+	HANSENS_SODA,
+	PEPSI_THROWBACK,
+	MOUNTAIN_DEW_THROWBACK,
+	COCA_COLA_CHERRY,
+	SEVEN_UP_CHERRY,
+	COCA_COLA_VANILLA_CHERRY,
+	DR_PEPPER_CHERRY_VANILLA,
+	PEPSI_BLUE,
+	PIBB_XTRA,
+	AnW_FLOAT,
+	MOUNTAIN_DEW,
+	BUBBLE_UP,
+	SPRITE,
+	DR_BROWNS_CEL_RAY,
+	SIERRA_MIST,
+	SEVEN_UP_DIVERSION,
+	STEWARTS_SODA,
+	COCA_COLA_CLASSIC,
+	NEHI,
+	RC_COLA,
+	PEPSI,
+	VANILLA_COKE,
+	Anw_CREAM_SODA,
+	DR_PEPPER_CAN;
 end
 
 declare QuestionMapHolder //maps all questions from QuestionCode and questions.csv
@@ -102,7 +198,7 @@ rule "Yes PwN n00bs "
 when
     Answer( question == QuestionCode.PWN_NOOBS, yes )
 then
-    insert( new FinalDrink(java.util.Arrays.asList(Drink.MOUNTAIN_DEW.name(), Drink.JOLT.name(), Drink.MELLO_YELLO.name(), Drink.BAWLS.name())));
+    insert( new FinalDrink(java.util.Arrays.asList(Drink.MOUNTAIN_DEW_CODE_RED.name(), Drink.JOLT.name(), Drink.MELLO_YELLO.name(), Drink.BAWLS.name())));
 end
 
 
@@ -151,9 +247,8 @@ rule "No boost"
 when
     Answer( question == QuestionCode.BOOST, !yes )
 then
-    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_BANGS.name(), Drink.FRESCA.name(), Drink.AnW.name(), Drink.SEVENUP_DIET.name(), Drink.SPRITE_ZERO.name()) ) );
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_BANGS.name(), Drink.FRESCA.name(), Drink.AnW_DIET.name(), Drink.SEVENUP_DIET.name(), Drink.SPRITE_ZERO.name()) ) );
 end
-
 rule "No diet -> anime"
 when
     Answer( question == QuestionCode.DIET, !yes )
@@ -167,13 +262,463 @@ rule "Yes Animated"
 when
     Answer( question == QuestionCode.ANIMATED, yes )
 then
-    insert( new FinalDrink( java.util.Arrays.asList(Drink.DIET_BANGS.name(), Drink.FRESCA.name(), Drink.AnW.name()) ) );
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.CACTUS_COOLER.name(), 
+        Drink.BUZZ.name(), 
+        Drink.SLURM.name()
+    )));
+end
+
+rule "No Animated -> Juggalo"
+when
+    Answer( question == QuestionCode.ANIMATED, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.JUGGALO.name() ) );
+    insert( new Answer( QuestionCode.JUGGALO, y ) );
+end
+
+rule "Yes Juggalo"
+when
+    Answer( question == QuestionCode.JUGGALO, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.FAYGO.name()) ) );
+end
+
+rule "No Juggalo -> Dirt Aftertaste"
+when
+    Answer( question == QuestionCode.JUGGALO, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.DIRT_AFTERTASTE.name() ) );
+    insert( new Answer( QuestionCode.DIRT_AFTERTASTE, y ) );
+end
+
+rule "Yes Dirt Aftertaste"
+when
+    Answer( question == QuestionCode.DIRT_AFTERTASTE, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.PEPSI_JAZZ.name()
+    )));
+end
+
+rule "No Dirt Aftertaste -> Tay Zonday"
+when
+    Answer( question == QuestionCode.DIRT_AFTERTASTE, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.TAY_ZONDAY.name() ) );
+    insert( new Answer( QuestionCode.TAY_ZONDAY, y ) );
+end
+
+rule "Yes Tay Zonday"
+when
+    Answer( question == QuestionCode.TAY_ZONDAY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.DR_PEPPER_CHERRY_CHOCOLATE.name()) ) );
+end
+
+rule "No Tay Zonday -> Brazil"
+when
+    Answer( question == QuestionCode.TAY_ZONDAY, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.BRAZIL.name() ) );
+    insert( new Answer( QuestionCode.BRAZIL, y ) );
+end
+
+rule "Yes Brazil"
+when
+    Answer( question == QuestionCode.BRAZIL, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.GUARANA_ANTARCTICA.name()) ) );
+end
+
+rule "No Brazil -> On the Dole"
+when
+    Answer( question == QuestionCode.BRAZIL, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.ON_THE_DOLE.name() ) );
+    insert( new Answer( QuestionCode.ON_THE_DOLE, y ) );
+end
+
+rule "Yes On the Dole"
+when
+    Answer( question == QuestionCode.ON_THE_DOLE, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.SAFEWAY.name() 
+    )));
+end
+
+rule "No On the Dole -> Flux Capacitor"
+when
+    Answer( question == QuestionCode.ON_THE_DOLE, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.FLUX_CAPACITOR.name() ) );
+    insert( new Answer( QuestionCode.FLUX_CAPACITOR, y ) );
+end
+
+rule "Yes Flux Capacitor"
+when
+    Answer( question == QuestionCode.FLUX_CAPACITOR, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.TAB.name(), 
+        Drink.CRYSTAL_PEPSI.name(), 
+        Drink.COCA_COLA_BLAK.name(),
+        Drink.HUBBA_BUBBA.name()
+    )));
+end
+
+rule "No Flux Capacitor -> Bubble Gum"
+when
+    Answer( question == QuestionCode.FLUX_CAPACITOR, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.BUBBLE_GUM.name() ) );
+    insert( new Answer( QuestionCode.BUBBLE_GUM, y ) );
+end
+
+rule "Yes Bubble Gum"
+when
+    Answer( question == QuestionCode.BUBBLE_GUM, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(Drink.INCA_KOLA.name()) ) );
+end
+
+rule "No Bubble Gum -> All Nighter"
+when
+    Answer( question == QuestionCode.BUBBLE_GUM, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.ALL_NIGHTER.name() ) );
+    insert( new Answer( QuestionCode.ALL_NIGHTER, y ) );
+end
+
+rule "Yes All Nighter"
+when
+    Answer( question == QuestionCode.ALL_NIGHTER, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.VAULT.name(), 
+        Drink.PEPSI_MAX.name(),
+        Drink.RED_BULL_SIMPLY_COLA.name(),
+        Drink.JOSTA.name()
+    )));
+end
+
+rule "No All Nighter -> Tesco"
+when
+    Answer( question == QuestionCode.ALL_NIGHTER, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.TESCO.name() ) );
+    insert( new Answer( QuestionCode.TESCO, y ) );
+end
+
+rule "Yes Tesco"
+when
+    Answer( question == QuestionCode.TESCO, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.QUIBLA_COLA.name()
+    )));
+end
+
+rule "No Tesco -> Picnic"
+when
+    Answer( question == QuestionCode.TESCO, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.PICNIC.name() ) );
+    insert( new Answer( QuestionCode.PICNIC, y ) );
+end
+
+rule "Yes Picnic"
+when
+    Answer( question == QuestionCode.PICNIC, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.SQUIRT.name(), 
+        Drink.DADS_ROOT_BEER.name(), 
+        Drink.SUNKIST.name(),
+        Drink.COUNTRY_TIME.name()
+    )));
+end
+
+rule "No Picnic -> Buy Any"
+when
+    Answer( question == QuestionCode.PICNIC, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.BUY_ANY.name() ) );
+    insert( new Answer( QuestionCode.BUY_ANY, y ) );
+end
+
+rule "Yes Buy Any"
+when
+    Answer( question == QuestionCode.BUY_ANY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.MOXIE.name(), 
+        Drink.ALE_EIGHT_ONE.name(), 
+        Drink.DR_PEPPER.name(),
+        Drink.PENNSYLVANIA_DUTCH_BIRCH_BEER.name(),
+        Drink.CHEERWINE.name()
+    )));
+end
+
+rule "No Buy Any -> Tyler Perry"
+when
+    Answer( question == QuestionCode.BUY_ANY, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.TYLER_PERRY.name() ) );
+    insert( new Answer( QuestionCode.TYLER_PERRY, y ) );
+end
+
+rule "Yes Tyler Perry"
+when
+    Answer( question == QuestionCode.TYLER_PERRY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.WELCHS.name(), 
+        Drink.FANTA_GRAPE.name(), 
+        Drink.BIG_RED.name(),
+        Drink.CRUSH.name(),
+        Drink.HAWAIIAN_PUNCH.name(),
+        Drink.FANTA.name()
+    )));
+end
+
+rule "No Tyler Perry -> Root Beer"
+when
+    Answer( question == QuestionCode.TYLER_PERRY, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.ROOT_BEER.name() ) );
+    insert( new Answer( QuestionCode.ROOT_BEER, y ) );
 end
 
 
+rule "Yes Root Beer -> Quality"
+when
+    Answer( question == QuestionCode.ROOT_BEER, yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.QUALITY.name() ) );
+    insert( new Answer( QuestionCode.QUALITY, y ) );
+end
+
+rule "Yes Quality"
+when
+    Answer( question == QuestionCode.QUALITY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.VIRGILS_ROOT_BEER_PARTY_KEG.name(),
+        Drink.HENRY_WEINHARDS_ROOT_BEER.name(),
+        Drink.DR_BROWNS_ROOT_BEER.name(),
+        Drink.THOMAS_KEMPER_ROOT_BEER.name(),
+        Drink.IBC_ROOT_BEER.name(),
+        Drink.SPRECHER_ROOT_BEER.name()
+    )));
+end
+
+rule "No Quality"
+when
+    Answer( question == QuestionCode.QUALITY, !yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.AnW_ROOT_BEER.name(), 
+        Drink.BARQS_ROOT_BEER.name(),
+        Drink.MUG_ROOT_BEER.name()
+    )));
+end
 
 
-//FINAL RESULTS
+rule "No Root Beer -> Tummy Ache"
+when
+    Answer( question == QuestionCode.ROOT_BEER, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.TUMMY_ACHE.name() ) );
+    insert( new Answer( QuestionCode.TUMMY_ACHE, y ) );
+end
+
+rule "No Tummy Ache -> HFCS"
+when
+    Answer( question == QuestionCode.TUMMY_ACHE, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.HFCS.name() ) );
+    insert( new Answer( QuestionCode.HFCS, y ) );
+end
+
+rule "Yes Tummy Ache"
+when
+    Answer( question == QuestionCode.QUALITY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.CANADA_DRY_GINGER_ALE.name(),
+        Drink.SEAGRAMS_GINGER_ALE.name(),
+        Drink.SCHWEPPES_GINGER_ALE.name(),
+        Drink.VERNORS_GINGER_ALE.name(),
+        Drink.BLENHEIM_GINGER_ALE.name()
+    )));
+end
+
+rule "Yes HFCS -> And Taste"
+when
+    Answer( question == QuestionCode.HFCS, yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.AND_TASTE.name() ) );
+    insert( new Answer( QuestionCode.AND_TASTE, y ) );
+end
+
+rule "No HFCS -> Cherry"
+when
+    Answer( question == QuestionCode.HFCS, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.CHERRY.name() ) );
+    insert( new Answer( QuestionCode.CHERRY, y ) );
+end
+
+
+rule "Yes And Taste"
+when
+    Answer( question == QuestionCode.AND_TASTE, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.COCA_COLA_CLASSIC.name(),
+        Drink.JONES_SODA.name(),
+        Drink.BOYLAN_BOTTLING.name()
+    )));
+end
+
+rule "No And Taste"
+when
+    Answer( question == QuestionCode.AND_TASTE, !yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.PEPSI_THROWBACK.name(), 
+        Drink.MOUNTAIN_DEW_THROWBACK.name(),
+        Drink.HANSENS_SODA.name()
+    )));
+end
+
+
+rule "Yes Cherry"
+when
+    Answer( question == QuestionCode.CHERRY, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.COCA_COLA_CHERRY.name(), 
+        Drink.SEVEN_UP_CHERRY.name(), 
+        Drink.COCA_COLA_VANILLA_CHERRY.name(), 
+        Drink.DR_PEPPER_CHERRY_VANILLA.name()
+    )));
+end
+
+rule "No Cherry -> Caffeine"
+when
+    Answer( question == QuestionCode.CHERRY, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.CAFFEINE.name() ) );
+    insert( new Answer( QuestionCode.CAFFEINE, y ) );
+end
+
+
+rule "No Caffeine"
+when
+    Answer( question == QuestionCode.CAFFEINE, !yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.SPRITE.name(),
+        Drink.SIERRA_MIST.name(),
+        Drink.SEVEN_UP_DIVERSION.name(),
+        Drink.BUBBLE_UP.name(),
+        Drink.DR_BROWNS_CEL_RAY.name()
+    )));
+end
+
+rule "Yes Caffeine -> Backpack"
+when
+    Answer( question == QuestionCode.CAFFEINE, yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.BACKPACK.name() ) );
+    insert( new Answer( QuestionCode.BACKPACK, y ) );
+end
+
+rule "Yes Backpack"
+when
+    Answer( question == QuestionCode.BACKPACK, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.PEPSI_BLUE.name(),
+        Drink.PIBB_XTRA.name(),
+        Drink.MOUNTAIN_DEW.name(),
+        Drink.AnW_FLOAT.name()
+    )));
+end
+
+rule "No Backpack -> Sing"
+when
+    Answer( question == QuestionCode.BACKPACK, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.SING.name() ) );
+    insert( new Answer( QuestionCode.SING, y ) );
+end
+
+rule "Yes Sing"
+when
+    Answer( question == QuestionCode.SING, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.STEWARTS_SODA.name()
+    )));
+end
+
+rule "No Sing -> Simpler Days"
+when
+    Answer( question == QuestionCode.SING, !yes )
+    QuestionMapHolder( qm : map )
+then
+    boolean y = gui.ask( (String) qm.get( QuestionCode.SIMPLER_DAYS.name() ) );
+    insert( new Answer( QuestionCode.SIMPLER_DAYS, y ) );
+end
+
+rule "Yes Simpler Days"
+when
+    Answer( question == QuestionCode.SIMPLER_DAYS, yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.RC_COLA.name(),
+        Drink.PEPSI.name(),
+        Drink.NEHI.name(),
+        Drink.COCA_COLA_CLASSIC.name()
+    )));
+end
+
+rule "No Simpler Days"
+when
+    Answer( question == QuestionCode.SIMPLER_DAYS, !yes )
+then
+    insert( new FinalDrink( java.util.Arrays.asList(
+        Drink.VANILLA_COKE.name(),
+        Drink.Anw_CREAM_SODA.name(),
+        Drink.DR_PEPPER_CAN.name()
+    )));
+end
+
 rule "Display final drinks"
 when
     FinalDrink( $list : drinks )
