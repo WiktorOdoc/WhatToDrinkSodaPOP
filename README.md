@@ -1,3 +1,5 @@
+# Java/drools project for Artificial Intelligence class (PUT CS 5th sem)
+
 # WhatToDrinkSodaPOP
 What should I drink? Soda POP edition. 
 
